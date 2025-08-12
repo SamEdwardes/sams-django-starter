@@ -24,7 +24,7 @@ brew install just
 Bootstrap the project (will install depdencies, create virtual environment, etc.)
 
 ```bash
-just init
+just bootstrap
 ```
 
 Run django in development mode:

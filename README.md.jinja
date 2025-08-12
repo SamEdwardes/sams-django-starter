@@ -1,3 +1,25 @@
-{{ project_name }}
+# {{ project_name }}
 
 {{ description }}
+
+## First time setup
+
+Install [just](https://github.com/casey/just?tab=readme-ov-file#installation):
+
+```bash
+brew install just
+```
+
+Bootstrap the project (will install depdencies, create virtual environment, etc.)
+
+```bash
+just bootstrap
+```
+
+## Development
+
+Start the dev server:
+
+```bash
+just dev
+```
