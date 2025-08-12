@@ -1,0 +1,16 @@
+# -----------------------------------------------------------------------------
+# Build
+# -----------------------------------------------------------------------------
+FROM {{ project_name }}-base:latest AS build
+
+# -----------------------------------------------------------------------------
+# App
+# -----------------------------------------------------------------------------
+FROM python:3.13.5-alpine
+
+# Copy selectively from builder to optimize final image.
+# --link enables better layer caching when base image changes
+COPY --link --from=build /app /app
+WORKDIR /app
+EXPOSE 8000
+CMD ['sh', '-c', "/app/.venv/bin/python manage.py migrate && /app/.venv/bin/python -m uvicorn --host 0.0.0.0 --port 8000 {{ project_name }}.asgi:application"]

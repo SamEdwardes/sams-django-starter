@@ -1,0 +1,13 @@
+
+:80 {
+
+  # Serve static files
+  handle_path /static/* {
+    root * /var/www/app/static/
+    file_server
+  }
+
+  # All other traffic should go to the reverse proxy
+  reverse_proxy web-app:8000
+ }
+

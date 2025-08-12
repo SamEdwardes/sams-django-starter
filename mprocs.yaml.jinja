@@ -1,0 +1,28 @@
+procs:
+  django-app:
+    shell: "uv run manage.py runserver"
+    env:
+      LOGFIRE_SERVICE_NAME: "django-app"
+    stop:
+      send-keys: ["<C-c>"]
+
+  django-tasks:
+    shell: "watchexec -r uv run manage.py db_worker"
+    env:
+      LOGFIRE_SERVICE_NAME: "django-tasks"
+    stop:
+      send-keys: ["<C-c>"]
+
+  tailwind:
+    shell: |
+      docker run -it --rm \
+        -v $PWD:/home/bun/app \
+        oven/bun \
+        /bin/bash -c 'bun install && bunx @tailwindcss/cli --watch -i "{{ app_name }}/static/{{ app_name }}/css/input.css" -o "{{ app_name }}/static/{{ app_name }}/css/output.css"'
+    stop:
+      send-keys: ["<C-c>"]
+
+  postgres:
+    shell: "docker compose -f docker/compose.yaml up postgres"
+    stop:
+      send-keys: ["<C-c>"]

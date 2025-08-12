@@ -1,0 +1,38 @@
+project_name:
+  type: str
+  help: What is your project name?
+
+app_name:
+  type: str
+  help: The name of the django app to create inside your project
+  default: "{{ project_name }}_app"
+
+description:
+  type: str
+  help: Describe your project in 1 sentence
+  default: "{{ project_name }} is a Django app that... TODO"
+
+hostname:
+  type: str
+  help: The hostname for your project (e.g. 'myproject.com')
+  default: "{{ project_name }}.com"
+
+_message_after_copy: |
+  Your django project "{{ project_name }}" has been created successfully!
+
+  Next steps:
+
+  1. Change directory to the project root:
+
+     $ cd {{ _copier_conf.dst_path }}
+
+  2. Review "README.md" and start coding.
+
+  3. Install the required dependencies:
+
+    # Install just
+    # https://github.com/casey/just?tab=readme-ov-file#installation
+    $ brew install just
+    
+    # Install everything else
+    $ just bootstrap

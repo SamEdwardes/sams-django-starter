@@ -1,0 +1,17 @@
+# -----------------------------------------------------------------------------
+# Build
+# -----------------------------------------------------------------------------
+FROM {{ project_name }}-base:latest AS build
+
+# Build static files
+WORKDIR /app
+RUN uv run manage.py collectstatic --no-input --skip-checks
+
+# -----------------------------------------------------------------------------
+# Caddy
+# -----------------------------------------------------------------------------
+FROM caddy:2.8.4
+
+# Copy the pre-built `/app` directory to the runtime container
+# and change the ownership to user app and group app in one step.
+COPY --from=build /app/staticfiles /var/www/app/static

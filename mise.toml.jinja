@@ -1,0 +1,13 @@
+[env]
+# Django
+DJANGO_SECRET_KEY = "{{ 999999999999999999999999999999999|ans_random|hash('sha512') }}"
+DJANGO_DEBUG = 1
+# Logire
+LOGFIRE_SEND_TO_LOGIRE = 0
+LOGFIRE_ENVIRONMENT = "local"
+LOGFIRE_TOKEN = ""
+# Postgres
+POSTGRES_HOST = "localhost"
+POSTGRES_USER = "{{ project_name }}"
+POSTGRES_DB = "{{ project_name }}"
+POSTGRES_PASSWORD = "{{ 999999999999999999999999999999999|ans_random|hash('sha512') }}"

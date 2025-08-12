@@ -1,0 +1,67 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+exclude: "{{ app_name }}static/{{ app_name }}/js/vendor/"
+repos:
+  # --------------------------------------------------------------------------
+  # General hooks
+  # --------------------------------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: https://github.com/streetsidesoftware/cspell-cli
+    rev: v9.0.1
+    hooks:
+      - id: cspell # Spell check changed files
+
+  # --------------------------------------------------------------------------
+  # Python
+  # --------------------------------------------------------------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.11.12
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args:
+          - --fix
+          - --select
+          - I,F401
+          - --show-fixes
+      # Run the formatter.
+      - id: ruff-format
+
+  # --------------------------------------------------------------------------
+  # HTML
+  # --------------------------------------------------------------------------
+  - repo: https://github.com/djlint/djLint
+    rev: v1.36.4
+    hooks:
+      - id: djlint-reformat-django
+      - id: djlint-django
+
+  - repo: https://github.com/rtts/djhtml
+    rev: "3.0.8" # replace with the latest tag on GitHub
+    hooks:
+      - id: djhtml
+        entry: djhtml --tabwidth 2
+
+  # --------------------------------------------------------------------------
+  # Spelling
+  # --------------------------------------------------------------------------
+  - repo: local
+    hooks:
+      # https://github.com/posit-dev/air
+      # Air is a formatter for R code. There is no official pre-commit hook
+      # for air, so for this to work you must have air installed. In the
+      # future air may have a pre-commit hook:
+      # https://github.com/posit-dev/air/issues/269
+      - id: air
+        name: Format R code with air
+        entry: air format .
+        language: system
+        files: \.R$

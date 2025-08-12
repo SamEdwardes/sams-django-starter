@@ -1,0 +1,83 @@
+@_:
+  just --list
+
+# Bootstrap a project after creating a fresh template (MacOS only)
+bootstrap:
+  #!/bin/bash
+  print-header() {
+    echo ""
+    echo "######################################"
+    echo "# ${1}"
+    echo "######################################"
+  }
+
+  echo "Boostraping your Django project!"
+
+  print-header "Installing UV..."
+  if command -v uv >/dev/null 2>&1; then
+    echo "Already installed"
+  else
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  fi
+
+
+  print-header "Installing docker"
+  if command -v docker >/dev/null 2>&1; then
+    echo "Already installed"
+  else
+    echo "TO BE Implemented"
+  fi
+
+  print-header "Installing mprocs"
+  if command -v mprocs >/dev/null 2>&1; then
+    echo "Already installed"
+  else
+    brew install mprocs
+  fi
+
+  print-header "Run database initial migrations"
+  docker compose -f docker/compose.yaml up postgres -d
+  sleep 5
+  just migrate
+
+  print-header "Bootstraping complete"
+  echo 'Run `just dev` to start the django development server'
+
+
+
+# Create a super user with access to django admin
+createsuperuser:
+  uv run manage.py createsuperuser
+
+# Run the development server
+dev:
+  mprocs
+
+# Run in production
+prod: build up
+
+up:
+  docker compose -f docker/compose.yaml up -d
+  docker compose -f docker/compose.yaml logs --follow
+
+down:
+    docker compose -f docker/compose.yaml down
+
+migrate:
+  uv run manage.py makemigrations
+  uv run manage.py migrate
+
+build:
+  docker build -f docker/Dockerfile.base -t {{ project_name }}-base:latest .
+  docker build -f docker/Dockerfile.app -t {{ project_name }}-app:latest .
+  docker build -f docker/Dockerfile.caddy -t {{ project_name }}-caddy:latest .
+
+# Download JS depdencies to static folder
+vendor-js:
+  wget \
+    --output-document {{ app_name }}/static/js/vendor/htmx.min.js \
+    https://cdn.jsdelivr.net/npm/htmx.org@2.x.x/dist/htmx.min.js 
+  wget \
+    --output-document {{ app_name }}/static/js/vendor/alpine.min.js \
+    https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js
+

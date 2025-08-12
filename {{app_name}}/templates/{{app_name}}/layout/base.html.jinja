@@ -1,0 +1,34 @@
+{% raw %}{% load static %}{% endraw %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light"class="h-full">
+  <head>
+    <!-- META TAGS -->
+    <meta name="description" content="{{ description }}" />
+    <meta name="keywords" content="keyword1, keyword2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- FAVICON -->
+    <link rel="icon" href="https://fav.farm/🐥" />
+    <!-- CSS -->
+    <!-- Add htmx-indicator class baked in to avoid the page flash -->
+    <style> .htmx-indicator { opacity: 0; transition: opacity 200ms ease-in; } </style>  
+    <link rel="stylesheet" href="{% raw %}{% static '{% endraw %}{{ app_name }}/css/custom.css' {% raw %}%}{% endraw %}" />
+    <!-- SCRIPTS -->
+    <script src="{% raw %}{% static '{% endraw %}{{ app_name }}/js/vendor/htmx.min.js' {% raw %}%}{% endraw %}"></script>
+    <script defer src="{% raw %}{% static '{% endraw %}{{ app_name }}/js/vendor/alpine.min.js' {% raw %}%}{% endraw %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+    <title>{% raw %}{% block head_title %}{% endraw %}{{ project_name }}{% raw %}{% endblock head_title %}{% endraw %}</title>
+    {% raw %}{% block extra_head %}{% endblock extra_head %}{% endraw %}
+  </head>
+  <body class="min-h-full flex flex-col bg-gray-200">
+    {% raw %}{% include {% endraw %}"{{ app_name }}/layout/navbar.html" {% raw %}%}{% endraw %}
+    <main id="content"class="w-full flex-grow mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-2">
+      {% raw %}{% block main %}
+        {% block content %}
+        {% endblock content %}
+      {% endblock main %}{% endraw %}
+    </main>
+    {% raw %}{% include {% endraw %}"{{ app_name }}/layout/footer.html" {% raw %}%}{% endraw %}
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindplus/elements": "^1.0.7",
+    "tailwindcss": "^4.1.11"
+  }
+}
