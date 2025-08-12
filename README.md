@@ -11,7 +11,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 Create a new Django project:
 
 ```bash
-uvx copier copy https://github.com/SamEdwardes/sams-django-starter mynewapp
+uvx copier copy gh:SamEdwardes/sams-django-starter mynewapp
 cd newapp
 ```
 
@@ -21,7 +21,7 @@ Install [just](https://github.com/casey/just?tab=readme-ov-file#installation):
 brew install just
 ```
 
-Bootstrap the project (will install depdencies, create virtual environment, etc.)
+Bootstrap the project (will install dependencies, create virtual environment, etc.)
 
 ```bash
 just bootstrap
