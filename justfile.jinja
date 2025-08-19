@@ -35,6 +35,13 @@ bootstrap:
     brew install mprocs
   fi
 
+  print-header "Installing mise"
+  if command -v mise >/dev/null 2>&1; then
+    echo "Already installed"
+  else
+    brew install mise
+  fi
+
   print-header "Run database initial migrations"
   docker compose -f docker/compose.yaml up postgres -d
   sleep 5

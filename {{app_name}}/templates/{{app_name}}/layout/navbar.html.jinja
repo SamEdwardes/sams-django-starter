@@ -4,6 +4,13 @@
 {% raw %}{% partialdef nav-items %}{% endraw %}
   <a href="{% raw %}{%{% endraw %} url '{{ app_name }}:index' {% raw %}%}{% endraw %}" class="{% raw %}{{ classes }}{% endraw %}">Home</a>
   <a href="{% raw %}{%{% endraw %} url '{{ app_name }}:about' {% raw %}%}{% endraw %}" class="{% raw %}{{ classes }}{% endraw %}">About</a>
+  {% raw %}{% if user.is_authenticated %}{% endraw %}
+    {% raw %}<a href="{% url {% endraw %}'{{ app_name }}{% raw %}:accounts_profile' %}" class="{{ classes }}">{{ user.email }}</a>{% endraw %}
+    {% raw %}<a href="{% url 'account_logout' %}" class="{{ classes }}">Logout</a>{% endraw %}
+  {% raw %}{% else %}{% endraw %}
+    {% raw %}<a href="{% url 'account_login' %}" class="{{ classes }}">Login</a>{% endraw %}
+    {% raw %}<a href="{% url 'account_signup' %}" class="{{ classes }}">Signup</a>{% endraw %}
+  {%raw %}{% endif %}{% endraw %}
 {% raw %}{% endpartialdef nav-items %}{% endraw %}
 
 <header class="bg-white">

@@ -3,9 +3,14 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 
 
-async def index(request: HttpRequest):
+def index(request: HttpRequest):
     return render(request, "{{ app_name }}/index.html")
 
 
-async def about(request: HttpRequest):
+def about(request: HttpRequest):
     return render(request, "{{ app_name }}/about.html")
+
+
+def account_profile(request: HttpRequest):
+    return render(request, "waitlist_app/accounts/profile.html")
+
