@@ -37,7 +37,6 @@ just dev
 ## Tech stack
 
 - Core logic
-  - Async django
   - Background tasks with [django-tasks](https://github.com/realOrangeOne/django-tasks)
   - Logging with [logfire](https://logfire.pydantic.dev/docs/)
   - Authentication with [django-allauth](https://docs.allauth.org/en/latest/)

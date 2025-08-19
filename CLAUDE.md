@@ -10,21 +10,6 @@ This document describes the technology stack and architectural patterns for this
 
 ### Core Logic
 
-#### Async Django
-
-- This project uses Django's async capabilities for improved performance
-- Use `async def` for views that perform I/O operations (database queries, API calls, file operations)
-- Utilize `sync_to_async()` and `async_to_sync()` decorators when mixing sync/async code
-- Prefer async database operations with `aget()`, `acreate()`, `afilter()`, etc.
-
-```python
-# Preferred async view pattern
-async def my_view(request):
-    user = await User.objects.aget(pk=request.user.pk)
-    data = await some_async_operation()
-    return render(request, 'template.html', {'user': user, 'data': data})
-```
-
 #### Background Tasks - django-tasks
 
 - Use django-tasks for background job processing
@@ -72,14 +57,18 @@ logfire.info("User action completed", user_id=user.id, action="profile_update")
 - Use HTMX events for client-side coordination
 
 ```html
-<div hx-get="/api/user-stats" hx-target="#stats-container" hx-trigger="every 30s">
-    <div id="stats-container">Loading...</div>
+<div
+  hx-get="/api/user-stats"
+  hx-target="#stats-container"
+  hx-trigger="every 30s"
+>
+  <div id="stats-container">Loading...</div>
 </div>
 ```
 
 ```python
 # HTMX-friendly view
-async def user_stats_partial(request):
+def user_stats_partial(request):
     if request.headers.get('HX-Request'):
         # Return partial template for HTMX
         return render(request, 'partials/user_stats.html', context)
@@ -96,8 +85,8 @@ async def user_stats_partial(request):
 
 ```html
 <div x-data="{ open: false }">
-    <button @click="open = !open">Toggle Menu</button>
-    <div x-show="open" x-transition>Menu Content</div>
+  <button @click="open = !open">Toggle Menu</button>
+  <div x-show="open" x-transition>Menu Content</div>
 </div>
 ```
 
@@ -112,14 +101,18 @@ async def user_stats_partial(request):
 <!-- components/user_card.html -->
 <c-vars title name avatar_url />
 <div class="bg-white rounded-lg shadow p-4">
-    <img src="{{ avatar_url }}" alt="{{ name }}" class="w-12 h-12 rounded-full">
-    <h3 class="text-lg font-semibold">{{ title }} {{ name }}</h3>
+  <img src="{{ avatar_url }}" alt="{{ name }}" class="w-12 h-12 rounded-full" />
+  <h3 class="text-lg font-semibold">{{ title }} {{ name }}</h3>
 </div>
 ```
 
 ```html
 <!-- Usage -->
-<c-user-card title="Dr." name="Jane Smith" avatar_url="/static/images/jane.jpg" />
+<c-user-card
+  title="Dr."
+  name="Jane Smith"
+  avatar_url="/static/images/jane.jpg"
+/>
 ```
 
 #### Template Partials - django-template-partials
@@ -131,7 +124,7 @@ async def user_stats_partial(request):
 ```html
 <!-- partials/notification.html -->
 <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded">
-    {{ message }}
+  {{ message }}
 </div>
 ```
 
@@ -151,8 +144,8 @@ return render_partial(request, 'partials/notification.html', {'message': 'Succes
 
 ```html
 <div class="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Card Title</h2>
-    <p class="text-gray-600 leading-relaxed">Card content here.</p>
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Card Title</h2>
+  <p class="text-gray-600 leading-relaxed">Card content here.</p>
 </div>
 ```
 
@@ -197,7 +190,6 @@ templates/
 
 ### Performance Considerations
 
-- Use async views for I/O-bound operations
 - Implement database query optimization (select_related, prefetch_related)
 - Cache frequently accessed data
 - Use HTMX for partial page updates to reduce bandwidth
@@ -222,7 +214,7 @@ templates/
 ### Dynamic Form Handling
 
 ```python
-async def dynamic_form_view(request):
+def dynamic_form_view(request):
     if request.method == 'POST':
         form = MyForm(request.POST)
         if form.is_valid():
@@ -237,13 +229,15 @@ async def dynamic_form_view(request):
 ### Real-time Updates
 
 ```html
-<div hx-get="/api/live-data" 
-     hx-target="#live-content" 
-     hx-trigger="every 5s"
-     x-data="{ lastUpdate: new Date() }"
-     @htmx:afterRequest="lastUpdate = new Date()">
-    <div id="live-content"></div>
-    <small x-text="'Last updated: ' + lastUpdate.toLocaleTimeString()"></small>
+<div
+  hx-get="/api/live-data"
+  hx-target="#live-content"
+  hx-trigger="every 5s"
+  x-data="{ lastUpdate: new Date() }"
+  @htmx:afterRequest="lastUpdate = new Date()"
+>
+  <div id="live-content"></div>
+  <small x-text="'Last updated: ' + lastUpdate.toLocaleTimeString()"></small>
 </div>
 ```
 
