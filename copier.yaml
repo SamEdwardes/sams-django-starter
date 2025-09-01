@@ -5,7 +5,7 @@ project_name:
 app_name:
   type: str
   help: The name of the django app to create inside your project
-  default: "{{ project_name }}_app"
+  default: "{{ project_name }}"
 
 description:
   type: str

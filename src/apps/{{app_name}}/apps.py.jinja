@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class WaitlistConfig(AppConfig):
+class {{ app_name | title }}Config(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = '{{ app_name }}'
+    name = 'apps.{{ app_name }}'

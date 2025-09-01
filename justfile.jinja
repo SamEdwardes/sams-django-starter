@@ -54,7 +54,7 @@ bootstrap:
 
 # Create a super user with access to django admin
 createsuperuser:
-  uv run manage.py createsuperuser
+  uv run src/manage.py createsuperuser
 
 # Run the development server
 dev:
@@ -71,8 +71,8 @@ down:
     docker compose -f docker/compose.yaml down
 
 migrate:
-  uv run manage.py makemigrations
-  uv run manage.py migrate
+  uv run src/manage.py makemigrations
+  uv run src/manage.py migrate
 
 build:
   docker build -f docker/Dockerfile.base -t {{ project_name }}-base:latest .

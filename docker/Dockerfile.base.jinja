@@ -34,10 +34,10 @@ RUN --mount=type=cache,target=/root/.cache \
   --no-install-project
 
 # Now install the  APPLICATION w/o dependencies (deps were installed in the last step)
-COPY manage.py /app/
-COPY templates /app/templates/
-COPY {{ project_name }} /app/{{ project_name }}/
-COPY {{ app_name }} /app/{{ app_name }}/
+COPY src/manage.py /app/src/
+COPY src/templates /app/src/templates/
+COPY {{ project_name }} /app/src/{{ project_name }}/
+COPY {{ app_name }} /app/src/apps/{{ app_name }}/
 
 RUN --mount=type=cache,target=/root/.cache \
   --mount=type=bind,source=uv.lock,target=uv.lock \
