@@ -1,13 +1,13 @@
 procs:
   django-app:
-    shell: "uv run manage.py runserver"
+    shell: "uv run src/manage.py runserver"
     env:
       LOGFIRE_SERVICE_NAME: "django-app"
     stop:
       send-keys: ["<C-c>"]
 
   django-tasks:
-    shell: "watchexec -r uv run manage.py db_worker"
+    shell: "watchexec -r uv run src/manage.py db_worker"
     env:
       LOGFIRE_SERVICE_NAME: "django-tasks"
     stop:
@@ -18,7 +18,7 @@ procs:
       docker run -it --rm \
         -v $PWD:/home/bun/app \
         oven/bun \
-        /bin/bash -c 'bun install && bunx @tailwindcss/cli --watch -i "{{ app_name }}/static/{{ app_name }}/css/input.css" -o "{{ app_name }}/static/{{ app_name }}/css/output.css"'
+        /bin/bash -c 'bun install && bunx @tailwindcss/cli --watch -i "src/static/css/input.css" -o "src/static/css/output.css"'
     stop:
       send-keys: ["<C-c>"]
 
