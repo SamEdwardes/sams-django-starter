@@ -2,10 +2,10 @@
 {% raw %}{% load partials %}{% endraw %}
 
 {% raw %}{% partialdef nav-items %}{% endraw %}
-  <a href="{% raw %}{%{% endraw %} url '{{ app_name }}:index' {% raw %}%}{% endraw %}" class="{% raw %}{{ classes }}{% endraw %}">Home</a>
-  <a href="{% raw %}{%{% endraw %} url '{{ app_name }}:about' {% raw %}%}{% endraw %}" class="{% raw %}{{ classes }}{% endraw %}">About</a>
+  <a href="{% raw %}{%{% endraw %} url 'apps.{{ app_name }}:index' {% raw %}%}{% endraw %}" class="{% raw %}{{ classes }}{% endraw %}">Home</a>
+  <a href="{% raw %}{%{% endraw %} url 'apps.{{ app_name }}:about' {% raw %}%}{% endraw %}" class="{% raw %}{{ classes }}{% endraw %}">About</a>
   {% raw %}{% if user.is_authenticated %}{% endraw %}
-    {% raw %}<a href="{% url {% endraw %}'{{ app_name }}{% raw %}:accounts_profile' %}" class="{{ classes }}">{{ user.email }}</a>{% endraw %}
+    {% raw %}<a href="{% url {% endraw %}'apps.{{ app_name }}{% raw %}:accounts_profile' %}" class="{{ classes }}">{{ user.email }}</a>{% endraw %}
     {% raw %}<a href="{% url 'account_logout' %}" class="{{ classes }}">Logout</a>{% endraw %}
   {% raw %}{% else %}{% endraw %}
     {% raw %}<a href="{% url 'account_login' %}" class="{{ classes }}">Login</a>{% endraw %}
@@ -21,7 +21,7 @@
     <a href="#" class="-m-1.5 p-1.5">
       <span class="sr-only">{{ project_name }}</span>
       <img
-        src="{% raw %}{% static{% endraw %} 'imgs/logo.svg' {% raw %}%}{% endraw %}"
+        src="{% raw %}{% static 'imgs/logo.svg' %}{% endraw %}"
         alt=""
         class="h-8 w-auto"
       />
